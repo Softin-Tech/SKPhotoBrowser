@@ -369,6 +369,7 @@ public extension SKPhotoBrowser {
 
 internal extension SKPhotoBrowser {
     func showButtons() {
+        toggleControlHidden(false)
         actionView.animate(hidden: false)
     }
     
@@ -591,6 +592,8 @@ private extension SKPhotoBrowser {
         // action view animation
         actionView.animate(hidden: hidden)
         
+        toggleControlHidden(hidden)
+        
         if !hidden && !permanent {
             hideControlsAfterDelay()
         }
@@ -631,6 +634,12 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
     }
 }
 
+extension SKPhotoBrowser {
+    open func toggleControlHidden(_ hidden: Bool) {
+        
+    }
+}
+
 public extension SKPhotoBrowser {
     func setup(photos: [SKPhotoProtocol], initialPageIndex: Int) {
         self.photos = photos
@@ -640,4 +649,5 @@ public extension SKPhotoBrowser {
         animator.senderOriginImage = photos[currentPageIndex].underlyingImage
         animator.senderViewForAnimation = photos[currentPageIndex] as? UIView
     }
+    
 }
