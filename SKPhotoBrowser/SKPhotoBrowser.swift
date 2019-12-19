@@ -630,3 +630,14 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         isEndAnimationByToolBar = true
     }
 }
+
+public extension SKPhotoBrowser {
+    func setup(photos: [SKPhotoProtocol], initialPageIndex: Int) {
+        self.photos = photos
+        self.photos.forEach { $0.checkCache() }
+        self.currentPageIndex = min(initialPageIndex, photos.count - 1)
+        self.initPageIndex = self.currentPageIndex
+        animator.senderOriginImage = photos[currentPageIndex].underlyingImage
+        animator.senderViewForAnimation = photos[currentPageIndex] as? UIView
+    }
+}
