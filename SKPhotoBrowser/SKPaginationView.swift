@@ -66,7 +66,10 @@ class SKPaginationView: UIView {
         } else {
             counterLabel?.text = nil
         }
-        
+//        NotificationCenter.default.post(name: SKPHOTO_PAGE_CHANGE_NOTIFICATION,
+//                                        object: nil,
+//                                        userInfo: ["Current": currentPageIndex,
+//                                                   "Total": browser.photos.count])
         guard let prevButton = prevButton, let nextButton = nextButton else { return }
         prevButton.isEnabled = (currentPageIndex > 0)
         nextButton.isEnabled = (currentPageIndex < browser.photos.count - 1)

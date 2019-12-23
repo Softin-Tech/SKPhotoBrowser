@@ -9,6 +9,7 @@
 import UIKit
 
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
+public let SKPHOTO_PAGE_CHANGE_NOTIFICATION = NSNotification.Name("SK.PageChange.Notification")
 
 // MARK: - SKPhotoBrowser
 open class SKPhotoBrowser: UIViewController {
@@ -54,6 +55,10 @@ open class SKPhotoBrowser: UIViewController {
     
     // strings
     open var cancelTitle = "Cancel"
+    
+    public var counterLabel: UILabel? {
+        paginationView?.counterLabel
+    }
 
     // MARK: - Initializer
     required public init?(coder aDecoder: NSCoder) {
@@ -369,7 +374,6 @@ public extension SKPhotoBrowser {
 
 internal extension SKPhotoBrowser {
     func showButtons() {
-        toggleControlHidden(false)
         actionView.animate(hidden: false)
     }
     
@@ -620,6 +624,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
             delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
             paginationView.update(currentPageIndex)
         }
+        currentIndexChange()
     }
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -635,9 +640,14 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
 }
 
 extension SKPhotoBrowser {
-    open func toggleControlHidden(_ hidden: Bool) {
+    @objc open func toggleControlHidden(_ hidden: Bool) {
         
     }
+    
+    @objc open func currentIndexChange() {
+        
+    }
+    
 }
 
 public extension SKPhotoBrowser {
@@ -648,6 +658,10 @@ public extension SKPhotoBrowser {
         self.initPageIndex = self.currentPageIndex
         animator.senderOriginImage = photos[currentPageIndex].underlyingImage
         animator.senderViewForAnimation = photos[currentPageIndex] as? UIView
+    }
+    
+    func didDeleteImage() {
+        deleteImage()
     }
     
 }
